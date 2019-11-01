@@ -23,6 +23,8 @@ class FloatingPanel: NSObject, UIGestureRecognizerDelegate {
             scrollView?.panGestureRecognizer.addTarget(self, action: #selector(handle(panGesture:)))
         }
     }
+    
+    var enablePanGestureOnScrollViews: [UIScrollView] = []
 
     private(set) var state: FloatingPanelPosition = .hidden {
         didSet {
@@ -232,6 +234,17 @@ class FloatingPanel: NSObject, UIGestureRecognizerDelegate {
                 scrollGestureRecognizers.contains(otherGestureRecognizer) {
                 return false
             }
+        }
+        
+        var didFoundGesture = false
+        enablePanGestureOnScrollViews.forEach { scrollView in
+            if let scrollGestureRecognizers = scrollView.gestureRecognizers,
+                scrollGestureRecognizers.contains(otherGestureRecognizer) {
+                didFoundGesture = true
+            }
+        }
+        if didFoundGesture {
+            return false
         }
 
         if let vc = viewcontroller,

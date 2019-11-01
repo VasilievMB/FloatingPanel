@@ -557,6 +557,10 @@ open class FloatingPanelController: UIViewController {
             break
         }
     }
+    
+    public func enablePangestureOn(scrollViews: [UIScrollView]) {
+        floatingPanel.enablePanGestureOnScrollViews = scrollViews
+    }
 
     // MARK: - Utilities
 
